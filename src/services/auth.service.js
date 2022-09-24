@@ -12,7 +12,7 @@ const AuthService = {
         const user = await User.findOne({ email: email });
 
         if (!user) {
-            listError.push('Tài khoản hoặc mật khẩu không đúng !!!');
+            return null;
         } else {
             const isValidAccount = await bcrypt.compare(password, user.password);
             const ava = user.avatar;
@@ -25,16 +25,15 @@ const AuthService = {
                     REFRESH_KEY,
                     TIME_TOKEN.REFRESH,
                 );
+                user.avatar = ava
                 return new ResponseModel(200, listError, {
                     user,
                     accessToken,
                     refreshToken,
                 });
-            } else {
-                listError.push('Tài khoản hoặc mật khẩu không đúng !!!');
-            }
+            } 
         }
-        return new ResponseModel(404, listError, null);
+        return null;
     }
     ,
     async refreshToken(req, res) {

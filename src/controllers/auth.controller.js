@@ -41,8 +41,8 @@ const AuthController = {
         const user = new User({
             _id: new mongoose.Types.ObjectId(),
             ...req.body,
+            role: ROLE.USER
         });
-        user.role = ROLE.USER;
 
         return user
             .save()
