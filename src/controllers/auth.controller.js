@@ -4,6 +4,7 @@ import ResponseModel from '../models/response/ResponseModel.js';
 import { MessageVN } from '../common/constant/message-vn.js';
 import AuthService from '../services/auth.service.js';
 import User from '../models/base/user.model.js';
+import { ROLE } from '../common/constant/role.js';
 
 const AuthController = {
 
@@ -41,6 +42,7 @@ const AuthController = {
             _id: new mongoose.Types.ObjectId(),
             ...req.body,
         });
+        user.role = ROLE.USER;
 
         return user
             .save()
