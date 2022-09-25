@@ -13,7 +13,6 @@ export const AuthMiddleware = {
                     return res.status(403).json(new ResponseModel(403, ['Phiên bản hết hạn vui lòng đăng nhập lại'], err));
                 } else {
                     req.user = objectGenarate.user;
-                    console.log(objectGenarate.user);
                     next();
                 }
             });
