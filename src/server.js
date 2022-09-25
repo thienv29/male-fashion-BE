@@ -1,12 +1,11 @@
 import express from 'express';
 import routes from './routes/index.js';
 import mongoose from 'mongoose';
-import { DB_LINK, PORT } from './config/index.js';
+import { DB_LINK, PORT, ADMIN_APP, CLIENT_APP } from './config/index.js';
 import http from 'http';
 import cookiePaser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors'
-
 const app = express();
 
 mongoose
