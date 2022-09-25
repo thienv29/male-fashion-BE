@@ -38,8 +38,7 @@ const AuthService = {
         const refreshToken = req.cookies.refreshTokenMaleFashionShop;
 
         if (!refreshToken) {
-            res.status(401).json(new ResponseModel(401, ['Hết phiên bản, vui lòng đăng nhập lại'], null));
-            return null;
+            return res.status(401).json(new ResponseModel(401, ['Hết phiên bản, vui lòng đăng nhập lại'], null));
         };
 
         jwt.verify(refreshToken, REFRESH_KEY, (err, { user }) => {
