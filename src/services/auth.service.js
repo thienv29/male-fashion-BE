@@ -7,18 +7,13 @@ import { TIME_TOKEN } from '../common/constant/time-token.js';
 
 const AuthService = {
     async checkLogin(body, res) {
-        const listError = [];
-        const { email, password, remember } = body;
+        const { email, password } = body;
         const user = await User.findOne({ email: email });
-
-        if (!user) {
-            return null;
-        } else {
+        if (user) {
             const isValidAccount = await bcrypt.compare(password, user.password);
             const ava = user.avatar;
             user.avatar = '';
             if (isValidAccount) {
-                listError.push('Đăng nhập thành công');
                 const accessToken = AuthService.generateToken(user, SECRECT_KEY, TIME_TOKEN.ACCESS);
                 const refreshToken = AuthService.generateToken(
                     user,
@@ -26,22 +21,26 @@ const AuthService = {
                     TIME_TOKEN.REFRESH,
                 );
                 user.avatar = ava
-                return new ResponseModel(200, listError, {
+                return new ResponseModel(200, [], {
                     user,
                     accessToken,
                     refreshToken,
                 });
-            } 
+            }
         }
-        return null;
+
+        return user;
     }
     ,
     async refreshToken(req, res) {
         let newAccessToken = '';
         let newRefreshToken = '';
-        const refreshToken = req.body.refreshToken;
+        const refreshToken = req.cookies.refreshTokenMaleFashionShop;
 
-        if (!refreshToken) return res.status(401).json(new ResponseModel(401));
+        if (!refreshToken) {
+            res.status(401).json(new ResponseModel(401, ['Hết phiên bản, vui lòng đăng nhập lại'], null));
+            return null;
+        };
 
         jwt.verify(refreshToken, REFRESH_KEY, (err, { user }) => {
             if (err) {
@@ -49,21 +48,16 @@ const AuthService = {
             }
             newAccessToken = AuthService.generateToken(user, SECRECT_KEY, TIME_TOKEN.ACCESS);
             newRefreshToken = AuthService.generateToken(user, REFRESH_KEY, TIME_TOKEN.REFRESH);
-
-            return new ResponseModel(200, ['success'], {
-                newAccessToken,
-                newRefreshToken,
-            });
         });
 
-        return new ResponseModel(200, ['success'], {
+        return {
             newAccessToken,
             newRefreshToken,
-        });
+        };
     }
     ,
     async logout(req, res) {
-        res.clearCookie('refreshToken');
+        res.clearCookie('refreshTokenMaleFashionShop');
         return new ResponseModel(200, ['logout success']);
     },
 

@@ -13,11 +13,12 @@ export const AuthMiddleware = {
                     return res.status(403).json(new ResponseModel(403, ['Phiên bản hết hạn vui lòng đăng nhập lại'], err));
                 } else {
                     req.user = objectGenarate.user;
+                    console.log(objectGenarate.user);
                     next();
                 }
             });
         } else {
-            return res.status(401).json(new ResponseModel(401, ['You\'re not authenticated'], ''));
+            return res.status(401).json(new ResponseModel(401, ['Vui lòng đăng nhập '], ''));
         }
     },
 
@@ -27,7 +28,7 @@ export const AuthMiddleware = {
                 if (req.user.role === permission || req.user.role === ROLE.ADMIN) {
                     next();
                 } else {
-                    return res.status(403).json(new ResponseModel(403, ['You don\'t have permission'], ''));
+                    return res.status(403).json(new ResponseModel(403, ['Không có quyền thực hiện tác vụ này'], ''));
                 }
             });
         };

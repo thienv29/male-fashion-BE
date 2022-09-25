@@ -5,6 +5,7 @@ import { DB_LINK, PORT } from './config/index.js';
 import http from 'http';
 import cookiePaser from 'cookie-parser';
 import morgan from 'morgan';
+import cors from 'cors'
 
 const app = express();
 
@@ -19,28 +20,16 @@ mongoose
     });
 
 const startServer = () => {
-
+    app.use(cors({
+        origin: "http://localhost:3200",
+        credentials: true,
+    }))
     app.use(cookiePaser());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
 
     app.use(morgan('combined'));
 
-    /** Rules of our API */
-    app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header(
-            'Access-Control-Allow-Headers',
-            'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-        );
-
-        if (req.method == 'OPTIONS') {
-            res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-            return res.status(200).json({});
-        }
-
-        next();
-    });
 
     app.use('/api/v1', routes);
 

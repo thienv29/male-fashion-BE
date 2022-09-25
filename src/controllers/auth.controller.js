@@ -10,8 +10,19 @@ const AuthController = {
 
     async login(req, res, next) {
         try {
-            const result = await AuthService.checkLogin(req.body, res);
-            res.json(result);
+            const response = await AuthService.checkLogin(req.body, res);
+            if (response) {
+                res.cookie("refreshTokenMaleFashionShop", response.result.refreshToken, {
+                    httpOnly: true,
+                    secure: false,
+                    path: '/',
+                    sameSite: 'strict'
+                })
+                delete response.result.refreshToken;
+                res.json(response);
+            } else {
+                res.json(new ResponseModel(500, ['Email hoặc mật khẩu không đúng !!'], null))
+            }
         } catch (e) {
             res.status(500).json(new ResponseModel(500, [MessageVN.ERROR_500], null));
         }
@@ -27,12 +38,24 @@ const AuthController = {
     },
 
     async refreshToken(req, res, next) {
-        try {
-            const result = await AuthService.refreshToken(req, res);
-            return res.json(result);
-        } catch (e) {
-            return res.status(500).json(new ResponseModel(500, [MessageVN.ERROR_500], null));
+        // try {
+        const response = await AuthService.refreshToken(req, res);
+        if (response) {
+            res.cookie("refreshTokenMaleFashionShop", response.newRefreshToken, {
+                httpOnly: true,
+                secure: false,
+                path: '/',
+                sameSite: 'strict'
+            })
+            delete response.newRefreshToken;
+            res.json(new ResponseModel(200, ['get token success'], response));
+        } else {
+            res.json(new ResponseModel(500, ['Vui lòng đăng nhập'], null))
         }
+
+        // } catch (e) {
+        //     return res.status(500).json(new ResponseModel(500, [MessageVN.ERROR_500], null));
+        // }
     },
 
     async register(req, res, next) {
