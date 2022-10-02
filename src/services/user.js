@@ -1,4 +1,4 @@
-import User from '../models/base/user.model.js';
+import User from '../models/base/user.js';
 import { hashPassword } from '../utils/hashPassword.js';
 import mongoose from 'mongoose';
 import ResponseModel from '../models/response/ResponseModel.js';
@@ -16,12 +16,10 @@ const UserService = {
     ,
     async createUser(user) {
         user.password = await hashPassword(user.password);
-
         const userSchema = new User({
             _id: new mongoose.Types.ObjectId(),
             ...user,
         });
-
         const result = await userSchema.save();
 
         return result;
