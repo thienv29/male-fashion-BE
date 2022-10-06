@@ -6,6 +6,7 @@ const courseSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
+        sortName: { type: String, required: true },
         phone: { type: String, required: true, trim: true, unique: true },
         birthday: { type: Date, required: true },
         email: {
@@ -24,4 +25,4 @@ const courseSchema = new mongoose.Schema({
     },
 );
 
-export default mongoose.model('Suplier', courseSchema);
+export default mongoose.model('Supplier', courseSchema);

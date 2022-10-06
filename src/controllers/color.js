@@ -44,7 +44,7 @@ const ColorController = {
         const colorId = req.params.colorId;
         try {
             const result = await ColorService.deleteColor(colorId);
-            return res.json(result);
+            return res.status(200).json(new ResponseModel(200, ['Xóa thành công'], result));
         } catch (e) {
             return res.status(500).json(new ResponseModel(500, ['Lỗi xóa màu'], null));
         }

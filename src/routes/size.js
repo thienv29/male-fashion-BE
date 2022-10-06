@@ -5,14 +5,16 @@ import { ROLE } from '../common/constant/role.js';
 
 const route = Router();
 
-route.post('/create',AuthMiddleware.authorize(ROLE.ADMIN), SizeController.create);
+route.post('/create', SizeController.create);
 
-route.patch('/update', AuthMiddleware.authorize(ROLE.ADMIN), SizeController.update);
+route.patch('/update', SizeController.update);
 
-route.delete('/delete', AuthMiddleware.authorize(ROLE.ADMIN), SizeController.delete);
+route.delete('/delete', SizeController.delete);
 
-route.get('/get-all', AuthMiddleware.authorize(ROLE.ADMIN), SizeController.getAll);
+route.post('/delete-all', SizeController.deleteAll);
 
-route.get('/get/:id', AuthMiddleware.authorize(ROLE.ADMIN), SizeController.getById);
+route.get('/get-all', SizeController.getAll);
+
+route.get('/get/:id', SizeController.getById);
 
 export default route;

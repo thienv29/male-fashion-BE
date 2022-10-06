@@ -3,9 +3,9 @@ import { hashPassword } from '../utils/hashPassword.js';
 import ResponseModel from '../models/response/ResponseModel.js';
 import { MessageVN } from '../common/constant/message-vn.js';
 import AuthService from '../services/auth.js';
-import User from '../models/base/user.js';
+import User from '../models/base/User.js';
 import { ROLE } from '../common/constant/role.js';
-import Customer from '../models/base/customer.js';
+import Customer from '../models/base/Customer.js';
 
 const AuthController = {
 

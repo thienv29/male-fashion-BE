@@ -1,5 +1,5 @@
-import Customer from '../models/base/customer.js';
-import User from '../models/base/user.js';
+import Customer from '../models/base/Customer.js';
+import User from '../models/base/User.js';
 import mongoose from 'mongoose';
 import UserService from './user.js';
 import { ROLE } from '../common/constant/role.js';

@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 
-const courseSchema = new mongoose.Schema({
+const sizeSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
-        name: { type: String, required: true, trim: true },
+        name: { type: String, required: true, trim: true ,unique: true},
     },
     {
         timestamps: true,
@@ -12,4 +12,4 @@ const courseSchema = new mongoose.Schema({
     },
 );
 
-export default mongoose.model('User', courseSchema);
+export default mongoose.model('Size', sizeSchema);

@@ -1,4 +1,4 @@
-import User from '../models/base/user.js';
+import User from '../models/base/User.js';
 import { hashPassword } from '../utils/hashPassword.js';
 import mongoose from 'mongoose';
 import ResponseModel from '../models/response/ResponseModel.js';
