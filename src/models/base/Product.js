@@ -12,11 +12,12 @@ const productSchema = new mongoose.Schema({
     salePrice: { type: Number },
     description: { type: String, trim: true },
     supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
-    image: { type: String, trim: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    image: { type: String, trim: true }
 },
     {
         timestamps: true,
-        versionKey: false,  
+        versionKey: false,
     },
 );
 

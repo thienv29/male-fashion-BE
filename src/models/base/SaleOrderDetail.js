@@ -4,7 +4,6 @@ mongoose.Promise = global.Promise;
 
 const SaleOrderDetailSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    code: { type: String, required: true, trim: true },
     description: { type: String, required: true, trim: true },
     quantity: {type: Number, required: true},
     amount: {type: Number, required: true},

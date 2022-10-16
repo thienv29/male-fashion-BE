@@ -19,7 +19,7 @@ mongoose
     });
 
 const startServer = () => {
-    var allowedDomains = ADMIN_APP ? [ADMIN_APP, CLIENT_APP] : ['http://localhost:3100', 'http://localhost:3200'];
+    var allowedDomains = [ADMIN_APP, CLIENT_APP, 'http://localhost:3100', 'http://localhost:3200'];
     app.use(cors({
         origin: function (origin, callback) {
             // bypass the requests with no origin (like curl requests, mobile apps, etc )
@@ -34,7 +34,9 @@ const startServer = () => {
         credentials: true,
     }));
     app.use(cookiePaser());
-    app.use(express.urlencoded({ extended: true }));
+    // app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+    app.use(express.json({ limit: '50mb' }));
+    app.use(express.urlencoded({ extended: true, limit: '50mb' }));
     app.use(express.json());
 
     app.use(morgan('combined'));

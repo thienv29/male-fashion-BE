@@ -26,6 +26,7 @@ const ProductController = {
             const result = await ProductService.createProduct(req.body);
             return res.status(200).json(new ResponseModel(200, ['Thêm sản phẩm thành công'], result));
         } catch (e) {
+            console.log(e);
             return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin sản phẩm'], null));
         }
     },
