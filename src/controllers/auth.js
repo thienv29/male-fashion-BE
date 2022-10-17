@@ -10,23 +10,23 @@ import Customer from '../models/base/Customer.js';
 const AuthController = {
 
     async login(req, res, next) {
-        try {
-            const response = await AuthService.checkLogin(req.body, res);
-            if (response) {
-                res.cookie("refreshTokenMaleFashionShop", response.result.refreshToken, {
-                    httpOnly: true,
-                    secure: false,
-                    path: '/',
-                    sameSite: 'strict'
-                })
-                delete response.result.refreshToken;
-                res.json(response);
-            } else {
-                res.json(new ResponseModel(500, ['Email hoặc mật khẩu không đúng !!'], null))
-            }
-        } catch (e) {
-            res.status(500).json(new ResponseModel(500, [MessageVN.ERROR_500], null));
+        // try {
+        const response = await AuthService.checkLogin(req.body, res);
+        if (response) {
+            res.cookie("refreshTokenMaleFashionShop", response.result.refreshToken, {
+                httpOnly: true,
+                secure: false,
+                path: '/',
+                sameSite: 'strict'
+            })
+            delete response.result.refreshToken;
+            res.json(response);
+        } else {
+            res.status(403).json(new ResponseModel(500, ['Email hoặc mật khẩu không đúng !!'], null))
         }
+        // } catch (e) {
+        //     res.status(500).json(new ResponseModel(500, [MessageVN.ERROR_500], null));
+        // }
     },
 
     async logout(req, res, next) {

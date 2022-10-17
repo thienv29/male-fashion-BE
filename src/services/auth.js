@@ -27,6 +27,7 @@ const AuthService = {
                     refreshToken,
                 });
             }
+            return false;
         }
 
         return user;

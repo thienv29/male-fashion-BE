@@ -6,11 +6,11 @@ import { ROLE } from '../common/constant/role.js';
 
 const CustomerService = {
     async getAll() {
-        const customers = await Customer.find().populate('user');
+        const customers = await User.find({ role: ROLE.CUSTOMER });
         return customers;
     },
     async getById(id) {
-        const customer = await Customer.findById(id).populate('user');
+        const customer = await User.findById(id);
         return customer;
     },
     async createCustomer(user) {
@@ -24,11 +24,8 @@ const CustomerService = {
         return userCreacted;
     },
     async updateCustomer(user) {
-        const customerSchema = new User({
-            _id: user.id,
-            ...user,
-        });
-        const result = await customerSchema.save();
+        user.role = ROLE.CUSTOMER;
+        const result = await UserService.updateUser(user);
         return result;
     },
     async deleteCustomer(customerId) {
@@ -37,7 +34,11 @@ const CustomerService = {
         await User.findByIdAndDelete(customer.user);
         return true;
     },
-
+    async deleteAllCustomer(customerIds) {
+        console.log(customerIds);
+        const result = await User.deleteMany({ _id: { $in: customerIds } });
+        return result;
+    },
 
 };
 

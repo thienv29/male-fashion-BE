@@ -27,13 +27,7 @@ const UserService = {
     ,
     async updateUser(user) {
         user.password = await hashPassword(user.password);
-
-        const userSchema = new User({
-            _id: user.id,
-            ...user,
-        });
-
-        const result = await userSchema.save();
+        const result = await User.findByIdAndUpdate(user._id, user);
 
         return result;
     }
@@ -42,7 +36,7 @@ const UserService = {
     async deleteUser(userId) {
 
         const result = await User.findByIdAndDelete(userId);
-        return result ;
+        return result;
     },
 
 
