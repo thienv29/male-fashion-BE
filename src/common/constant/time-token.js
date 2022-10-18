@@ -1,4 +1,4 @@
 export const TIME_TOKEN = {
-    ACCESS: '900s',
+    ACCESS: '1d',
     REFRESH: '1d',
 };
