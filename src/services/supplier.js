@@ -13,8 +13,10 @@ const SupplierService = {
     }
     ,
     async createSupplier(supplier) {
+        const sortName = supplier.lastName + (supplier.firstName == '' ? '' : ` - ${supplier.firstName}`);
         const supplierSchema = new Supplier({
             _id: new mongoose.Types.ObjectId(),
+            sortName,
             ...supplier,
         });
 
@@ -23,7 +25,8 @@ const SupplierService = {
     }
     ,
     async updateSupplier(supplier) {
-        const result = await Supplier.findByIdAndUpdate(supplier._id, supplier);
+        const sortName = supplier.lastName + (supplier.firstName == '' ? '' : ` - ${supplier.firstName}`);
+        const result = await Supplier.findByIdAndUpdate(supplier._id, {...supplier, sortName});
         return result;
     }
 

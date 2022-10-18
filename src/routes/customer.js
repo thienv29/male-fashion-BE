@@ -9,7 +9,9 @@ route.post('/create', CustomerController.create);
 
 route.patch('/update', CustomerController.update);
 
-route.delete('/delete/:id', CustomerController.deleteById);
+route.delete('/delete', CustomerController.delete);
+
+route.post('/delete-all', CustomerController.deleteAll);
 
 route.get('/get-all', CustomerController.getAll);
 

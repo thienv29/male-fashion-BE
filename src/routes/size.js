@@ -13,7 +13,7 @@ route.delete('/delete', SizeController.delete);
 
 route.post('/delete-all', SizeController.deleteAll);
 
-route.get('/get-all', SizeController.getAll);
+route.get('/get-all', AuthMiddleware.verifyToken, SizeController.getAll);
 
 route.get('/get/:id', SizeController.getById);
 

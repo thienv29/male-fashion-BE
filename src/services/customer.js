@@ -13,6 +13,10 @@ const CustomerService = {
         const customer = await User.findById(id);
         return customer;
     },
+    async getCustomerByUserId(id) {
+        const customer = await Customer.findOne({ user: mongoose.Types.ObjectId(id) });
+        return customer;
+    },
     async createCustomer(user) {
         user.role = ROLE.CUSTOMER;
         const userCreacted = await UserService.createUser(user);

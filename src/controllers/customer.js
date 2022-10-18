@@ -39,7 +39,7 @@ const CustomerController = {
         }
     },
 
-    async deleteById(req, res, next) {
+    async delete(req, res, next) {
         const customerId = req.params.id;
         try {
             const result = await CustomerService.deleteCustomer(customerId);
