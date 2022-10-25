@@ -36,7 +36,7 @@ const ProductService = {
             productDetail.push(new ProductDetail({
                 _id: new mongoose.Types.ObjectId(),
                 ...detail,
-                code: productResult.code + detail.color.name + detail.size.name
+                code: `${productResult.code} - ${detail.color.name} - ${detail.size.name}`
             }))
         });
         await ProductDetail.insertMany(productDetail);
@@ -44,7 +44,7 @@ const ProductService = {
     }
     ,
     async updateProduct(product) {
-        console.log(product._id);
+        const listDetails = productFull.listDetails;
         const result = await Product.findByIdAndUpdate(product._id, product);
         return result;
     }

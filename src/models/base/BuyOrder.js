@@ -8,8 +8,6 @@ const BuyOrderSchema = new mongoose.Schema({
     description: { type: String, required: true, trim: true },
     supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
-    paymentMethod: { type: String, required: true, trim: true },
-    status: { type: String, required: true, trim: true },
 },
     {
         timestamps: true,

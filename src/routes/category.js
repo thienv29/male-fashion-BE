@@ -13,7 +13,7 @@ route.delete('/delete', CategoryController.delete);
 
 route.post('/delete-all', CategoryController.deleteAll);
 
-route.get('/get-all', AuthMiddleware.authorize(ROLE.ADMIN), CategoryController.getAll);
+route.get('/get-all', CategoryController.getAll);
 
 route.get('/get/:id', CategoryController.getById);
 

@@ -10,6 +10,7 @@ import size from './size.js';
 import supplier from './supplier.js';
 import product from './product.js';
 import properties from './properties.js';
+import buyOrder from './buyOrder.js';
 
 const routes = Router();
 
@@ -24,6 +25,7 @@ routes.use('/size', size);
 routes.use('/supplier', supplier);
 routes.use('/product', product);
 routes.use('/properties', properties);
+routes.use('/buy-order', buyOrder);
 routes.get('/', (req, res) => {
     res.send('Home');
 });

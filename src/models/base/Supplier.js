@@ -4,11 +4,10 @@ mongoose.Promise = global.Promise;
 
 const courseSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    firstName: { type: String, required: true },
-    lastName: { type: String },
+    firstName: { type: String },
+    lastName: { type: String, required: true },
     sortName: { type: String },
     phone: { type: String, required: true, trim: true, unique: true },
-    birthday: { type: Date },
     email: {
         type: String,
         required: true,

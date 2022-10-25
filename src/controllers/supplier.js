@@ -22,12 +22,12 @@ const SupplierController = {
     },
 
     async create(req, res, next) {
-        try {
-            const result = await SupplierService.createSupplier(req.body);
-            return res.status(200).json(new ResponseModel(200, ['Thêm supplier thành công'], result));
-        } catch (e) {
-            return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin nhà cung cấp'], null));
-        }
+        // try {
+        const result = await SupplierService.createSupplier(req.body);
+        return res.status(200).json(new ResponseModel(200, ['Thêm supplier thành công'], result));
+        // } catch (e) {
+        //     return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin nhà cung cấp'], null));
+        // }
     },
 
     async update(req, res, next) {
