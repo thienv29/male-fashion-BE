@@ -4,12 +4,24 @@ import mongoose from 'mongoose';
 
 const ProductService = {
     async getAll() {
-        const products = await Product.find().populate('supplier', 'category');
+        const products = await Product.find();
         return products;
     }
     ,
+    async getFeature() {
+        const products = await Product.find().limit(4);
+        return products;
+    }
+    ,
+    async getRelatedProducts(id) {
+        const product = await Product.findOne({_id: id});
+        const products = await Product.find({supplier: mongoose.Types.ObjectId(product.supplier)});
+        return products;
+    }
+    ,
+
     async getById(id) {
-        const product = await Product.findOne({ _id: id })
+        const product = await Product.findOne({ _id: id }).populate('supplier')
         const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(id) }).populate('size').populate('color')
         product.set('listDetails', detls, { strict: false });
         return product;
