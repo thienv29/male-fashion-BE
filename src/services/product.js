@@ -8,14 +8,34 @@ const ProductService = {
         return products;
     }
     ,
+    async getProductsPagination(page) {
+        const limit = 9;
+        const products = await Product.find().skip((page * limit) - limit).limit(limit);
+        return products;
+    }
+    ,
+    async getFilter(filterModel) {
+        const { priceTo, cate, supplier, size, page } = filterModel;
+        const limit = 9;
+        const totalItem = await Product.count();
+        const products = await Product.find(
+            {
+                supplier: mongoose.Types.ObjectId(supplier),
+                category: mongoose.Types.ObjectId(cate),
+                exportPrice: { $lt: priceTo }
+            }
+        ).skip((page * limit) - limit).limit(limit);
+        return { ...filterModel, totalItem, products };
+    }
+    ,
     async getFeature() {
         const products = await Product.find().limit(4);
         return products;
     }
     ,
     async getRelatedProducts(id) {
-        const product = await Product.findOne({_id: id});
-        const products = await Product.find({supplier: mongoose.Types.ObjectId(product.supplier)});
+        const product = await Product.findOne({ _id: id });
+        const products = await Product.find({ supplier: mongoose.Types.ObjectId(product.supplier) });
         return products;
     }
     ,
