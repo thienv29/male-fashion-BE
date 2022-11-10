@@ -19,13 +19,13 @@ const ProductService = {
         const limit = 9;
         const totalItem = await Product.count();
         const products = await Product.find(
-            {
-                supplier: mongoose.Types.ObjectId(supplier),
-                category: mongoose.Types.ObjectId(cate),
-                exportPrice: { $lt: priceTo }
-            }
+            // {
+            //     supplier: mongoose.Types.ObjectId(supplier),
+            //     category: mongoose.Types.ObjectId(cate),
+            //     exportPrice: { $lt: priceTo }
+            // 
         ).skip((page * limit) - limit).limit(limit);
-        return { ...filterModel, totalItem, products };
+        return { ...filterModel, totalItem, products, limit };
     }
     ,
     async getFeature() {
