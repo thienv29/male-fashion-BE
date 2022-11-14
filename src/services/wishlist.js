@@ -1,9 +1,11 @@
 import Wishlist from '../models/base/Wishlist.js';
+import Customer from '../models/base/Customer.js';
 import mongoose from 'mongoose';
 
 const WishlistService = {
-    async getAll() {
-        const wishlists = await Wishlist.find();
+    async getAll(user) {
+        const customer = await Customer.findOne({ user: mongoose.Types.ObjectId(user._id) });
+        const wishlists = await Wishlist.find({ customer: mongoose.Types.ObjectId(customer._id) }).populate('product');
         return wishlists;
     }
     ,
@@ -13,6 +15,15 @@ const WishlistService = {
     }
     ,
     async createWishlist(wishlist) {
+        console.log(wishlist);
+        const wishListOld = await Wishlist.findOne({
+            product: mongoose.Types.ObjectId(wishlist.product),
+            customer: mongoose.Types.ObjectId(wishlist.customer)
+        });
+
+        if (wishListOld) {
+            return wishlist;
+        }
 
         const wishlistSchema = new Wishlist({
             _id: new mongoose.Types.ObjectId(),
@@ -30,6 +41,7 @@ const WishlistService = {
 
     ,
     async deleteWishlist(wishlistId) {
+        console.log(wishlistId);
         const result = await Wishlist.findByIdAndDelete(wishlistId);
         return result;
     },

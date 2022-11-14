@@ -9,11 +9,11 @@ route.post('/create',AuthMiddleware.authorize(ROLE.CUSTOMER), WishlistController
 
 route.patch('/update', WishlistController.update);
 
-route.delete('/delete', WishlistController.delete);
+route.get('/delete/:wishlistId', WishlistController.delete);
 
 route.post('/delete-all', WishlistController.deleteAll);
 
-route.get('/get-all',  WishlistController.getAll);
+route.get('/get-all',AuthMiddleware.authorize(ROLE.CUSTOMER),  WishlistController.getAll);
 
 route.get('/get/:id', WishlistController.getById);
 

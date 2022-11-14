@@ -6,7 +6,7 @@ const WishlistController = {
     async getAll(req, res, next) {
         try {
             console.log(req.user);
-            const result = await WishlistService.getAll();
+            const result = await WishlistService.getAll(req.user);
             return res.status(200).json(new ResponseModel(200, [], result));
         } catch (e) {
             res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin sản phẩm'], null));
@@ -24,8 +24,8 @@ const WishlistController = {
 
     async create(req, res, next) {
         // try {
-
-        const result = await WishlistService.createWishlist( req.body);
+        console.log(req.body);
+        const result = await WishlistService.createWishlist(req.body);
         return res.status(200).json(new ResponseModel(200, ['Thêm sản phẩm thành công'], result));
         // } catch (e) {
         //     return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin sản phẩm'], null));
@@ -44,6 +44,7 @@ const WishlistController = {
 
     async delete(req, res, next) {
         const wishlistId = req.params.wishlistId;
+        console.log(req.params);
         try {
             const result = await WishlistService.deleteWishlist(wishlistId);
             return res.status(200).json(new ResponseModel(200, ['Xóa thành công'], result));
