@@ -8,7 +8,7 @@ const courseSchema = new mongoose.Schema({
         lastName: { type: String, required: true },
         password: { type: String, required: true },
         phone: { type: String, required: true, trim: true, unique: true },
-        birthday: { type: Date, required: true },
+        birthday: { type: Date },
         email: {
             type: String,
             required: true,
