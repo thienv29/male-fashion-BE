@@ -4,12 +4,44 @@ import mongoose from 'mongoose';
 
 const ProductService = {
     async getAll() {
-        const products = await Product.find().populate('supplier', 'category');
+        const products = await Product.find();
         return products;
     }
     ,
+    async getProductsPagination(page) {
+        const limit = 9;
+        const products = await Product.find().skip((page * limit) - limit).limit(limit);
+        return products;
+    }
+    ,
+    async getFilter(filterModel) {
+        const { priceTo, cate, supplier, size, page } = filterModel;
+        const limit = 9;
+        const totalItem = await Product.count();
+        const products = await Product.find(
+            // {
+            //     supplier: mongoose.Types.ObjectId(supplier),
+            //     category: mongoose.Types.ObjectId(cate),
+            //     exportPrice: { $lt: priceTo }
+            // 
+        ).skip((page * limit) - limit).limit(limit);
+        return { ...filterModel, totalItem, products, limit };
+    }
+    ,
+    async getFeature() {
+        const products = await Product.find().limit(4);
+        return products;
+    }
+    ,
+    async getRelatedProducts(id) {
+        const product = await Product.findOne({ _id: id });
+        const products = await Product.find({ supplier: mongoose.Types.ObjectId(product.supplier) });
+        return products;
+    }
+    ,
+
     async getById(id) {
-        const product = await Product.findOne({ _id: id })
+        const product = await Product.findOne({ _id: id }).populate('supplier')
         const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(id) }).populate('size').populate('color')
         product.set('listDetails', detls, { strict: false });
         return product;

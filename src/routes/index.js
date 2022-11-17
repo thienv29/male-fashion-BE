@@ -11,6 +11,8 @@ import supplier from './supplier.js';
 import product from './product.js';
 import properties from './properties.js';
 import buyOrder from './buyOrder.js';
+import wishlist from './wishlist.js';
+import cart from './cart.js';
 
 const routes = Router();
 
@@ -26,6 +28,8 @@ routes.use('/supplier', supplier);
 routes.use('/product', product);
 routes.use('/properties', properties);
 routes.use('/buy-order', buyOrder);
+routes.use('/wishlist', wishlist);
+routes.use('/cart', cart);
 routes.get('/', (req, res) => {
     res.send('Home');
 });

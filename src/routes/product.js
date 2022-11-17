@@ -13,6 +13,15 @@ route.post('/delete-all', ProductController.deleteAll);
 
 route.get('/get-all', ProductController.getAll);
 
+route.get('/get-feature', ProductController.getFeature);
+
+route.get('/get-related/:id', ProductController.getRelatedProducts);
+
 route.get('/get/:id', ProductController.getById);
+
+route.get('/page/:page', ProductController.getProductsPagination);
+
+route.post('/get-filter', ProductController.getFilter);
+
 
 export default route;
