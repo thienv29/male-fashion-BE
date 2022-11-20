@@ -1,7 +1,5 @@
 import { Router } from 'express';
 import SupplierController from '../controllers/supplier.js';
-import { AuthMiddleware } from '../middlewares/auth.js';
-import { ROLE } from '../common/constant/role.js';
 
 const route = Router();
 

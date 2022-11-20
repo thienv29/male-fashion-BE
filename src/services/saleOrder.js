@@ -1,0 +1,73 @@
+import Customer from '../models/base/Customer.js';
+import SaleOrder from '../models/base/SaleOrder.js';
+import mongoose from 'mongoose';
+import SaleOrderDetail from '../models/base/SaleOrderDetail.js';
+import Cart from '../models/base/Cart.js';
+import CartService from './cart.js';
+
+const SaleOrderService = {
+    async getAll(user) {
+        const customer = await Customer.findOne({ user: mongoose.Types.ObjectId(user._id) });
+        const saleOrders = await SaleOrder.find({ customer: mongoose.Types.ObjectId(customer._id) });
+        return saleOrders;
+    }
+    ,
+    async getById(id) {
+        const saleOrder = await SaleOrder.findOne({ _id: id });
+        return saleOrder;
+    }
+    ,
+    async getFullById(id) {
+        const saleOrder = await SaleOrder.findOne({ _id: id });
+        const listDetails = await SaleOrderDetail.find({saleOrder: mongoose.Types.ObjectId(id)}).populate('productDetail');
+        saleOrder.set('listDetails',listDetails, { strict: false })
+        return saleOrder;
+    }
+    ,
+    async createSaleOrder(saleOrder) {
+        const listDetails = saleOrder.listDetails;
+        const saleOrderDetails = [];
+        const saleOrderSchema = new SaleOrder({
+            _id: new mongoose.Types.ObjectId(),
+            ...saleOrder,
+        });
+        const result = await saleOrderSchema.save();
+        if(result){
+            listDetails.forEach((detail) => {
+                detail.saleOrder = result;
+                saleOrderDetails.push(detail);
+            })
+            const resultDetail = await SaleOrderDetail.insertMany(saleOrderDetails);
+            if(resultDetail){
+                const carts = await Cart.find({ customer: mongoose.Types.ObjectId(saleOrder.customer)}) || [];
+                const cartIds = [];
+                carts.forEach((cart) => {
+                    cartIds.push(cart._id);
+                });
+                await CartService.deleteAllCart(cartIds);
+            }
+
+        }
+        return result;
+    }
+    ,
+    async updateSaleOrder(saleOrder) {
+        const result = await SaleOrder.findByIdAndUpdate(saleOrder._id, saleOrder);
+        return result;
+    }
+
+    ,
+    async deleteSaleOrder(saleOrderId) {
+        const result = await SaleOrder.findByIdAndDelete(saleOrderId);
+        return result;
+    },
+
+    async deleteAllSaleOrder(saleOrderIds) {
+        const result = await SaleOrder.deleteMany({ _id: { $in: saleOrderIds } });
+        return result;
+    },
+
+
+};
+
+export default SaleOrderService;

@@ -15,15 +15,22 @@ const ProductService = {
     }
     ,
     async getFilter(filterModel) {
-        const { priceTo, cate, supplier, size, page } = filterModel;
+        const { searchText, priceTo, cate, supplier, size, page } = filterModel;
         const limit = 9;
         const totalItem = await Product.count();
+        let objectFilter = {};
+        if (supplier !== '') {
+            objectFilter.supplier = supplier;
+        }
+        if (cate !== '') {
+            objectFilter.category = cate;
+        }
         const products = await Product.find(
-            // {
-            //     supplier: mongoose.Types.ObjectId(supplier),
-            //     category: mongoose.Types.ObjectId(cate),
-            //     exportPrice: { $lt: priceTo }
-            // 
+            {
+                ...objectFilter,
+                name: { $regex: '.*' + searchText + '.*' },
+                exportPrice: Number(priceTo) === 0 ? { $gt: Number(priceTo) }: { $lt: Number(priceTo) }
+            }
         ).skip((page * limit) - limit).limit(limit);
         return { ...filterModel, totalItem, products, limit };
     }
@@ -41,18 +48,12 @@ const ProductService = {
     ,
 
     async getById(id) {
-        const product = await Product.findOne({ _id: id }).populate('supplier')
-        const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(id) }).populate('size').populate('color')
+        const product = await Product.findOne({ _id: id }).populate('supplier');
+        const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(id) }).populate('size').populate('color');
         product.set('listDetails', detls, { strict: false });
         return product;
     }
-    ,
-    async getFullById(id) {
-        const product = await Product.findOne({ _id: id }).populate('category').populate('supplier')
-        const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(id) }).populate('size').populate('color')
-        product.set('listDetails', detls, { strict: false });
-        return product;
-    }
+
     ,
     async createProduct(productFull) {
         const listDetails = productFull.listDetails;
@@ -68,8 +69,8 @@ const ProductService = {
             productDetail.push(new ProductDetail({
                 _id: new mongoose.Types.ObjectId(),
                 ...detail,
-                code: `${productResult.code} - ${detail.color.name} - ${detail.size.name}`
-            }))
+                code: `${productResult.code} - ${detail.color.name} - ${detail.size.name}`,
+            }));
         });
         await ProductDetail.insertMany(productDetail);
         return productResult;
@@ -90,9 +91,9 @@ const ProductService = {
     async deleteAllProduct(productIds) {
         const result = await Product.deleteMany({ _id: { $in: productIds } });
         const productIdObject = productIds.map((id) => {
-            return mongoose.Types.ObjectId(id)
-        })
-        const detls = await ProductDetail.deleteMany({ product: { $in: productIdObject } })
+            return mongoose.Types.ObjectId(id);
+        });
+        const detls = await ProductDetail.deleteMany({ product: { $in: productIdObject } });
         return true;
     },
 

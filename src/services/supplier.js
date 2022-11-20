@@ -26,7 +26,7 @@ const SupplierService = {
     ,
     async updateSupplier(supplier) {
         const sortName = supplier.lastName + (supplier.firstName == '' ? '' : ` - ${supplier.firstName}`);
-        const result = await Supplier.findByIdAndUpdate(supplier._id, {...supplier, sortName});
+        const result = await Supplier.findByIdAndUpdate(supplier._id, { ...supplier, sortName });
         return result;
     }
 

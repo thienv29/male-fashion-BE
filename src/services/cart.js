@@ -13,7 +13,6 @@ const CartService = {
         });
         const products = await Product.find({ _id: { $in: productIds } });
         carts.forEach((itemCart) => {
-            console.log(itemCart.productDetail.product.toString());
             const product = products.find((item) => item._id == itemCart.productDetail.product.toString());
             itemCart.set('name', product.name, { strict: false });
         });
@@ -26,10 +25,9 @@ const CartService = {
     }
     ,
     async createItemCart(cart) {
-        console.log(cart);
         const cartOld = await Cart.findOne({
             productDetail: mongoose.Types.ObjectId(cart.productDetail),
-            customer: mongoose.Types.ObjectId(cart.customer)
+            customer: mongoose.Types.ObjectId(cart.customer),
         });
 
         if (cartOld) {
@@ -54,13 +52,11 @@ const CartService = {
 
     ,
     async deleteCart(cartId) {
-        console.log(cartId);
         const result = await Cart.findByIdAndDelete(cartId);
         return result;
     },
 
     async deleteAllCart(cartIds) {
-        console.log(cartIds);
         const result = await Cart.deleteMany({ _id: { $in: cartIds } });
         return result;
     },

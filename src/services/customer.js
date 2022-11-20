@@ -22,7 +22,7 @@ const CustomerService = {
         const userCreacted = await UserService.createUser(user);
         const customerTmp = new Customer({
             _id: new mongoose.Types.ObjectId(),
-            user: userCreacted._id
+            user: userCreacted._id,
         });
         await customerTmp.save();
         return userCreacted;
@@ -39,7 +39,6 @@ const CustomerService = {
         return true;
     },
     async deleteAllCustomer(customerIds) {
-        console.log(customerIds);
         const result = await User.deleteMany({ _id: { $in: customerIds } });
         return result;
     },

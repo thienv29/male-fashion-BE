@@ -13,6 +13,7 @@ import properties from './properties.js';
 import buyOrder from './buyOrder.js';
 import wishlist from './wishlist.js';
 import cart from './cart.js';
+import saleOrder from './saleOrder.js';
 
 const routes = Router();
 
@@ -30,6 +31,7 @@ routes.use('/properties', properties);
 routes.use('/buy-order', buyOrder);
 routes.use('/wishlist', wishlist);
 routes.use('/cart', cart);
+routes.use('/saleOrder', saleOrder)
 routes.get('/', (req, res) => {
     res.send('Home');
 });

@@ -1,7 +1,6 @@
 import User from '../models/base/User.js';
 import { hashPassword } from '../utils/hashPassword.js';
 import mongoose from 'mongoose';
-import ResponseModel from '../models/response/ResponseModel.js';
 
 const UserService = {
     async getAll() {

@@ -34,7 +34,6 @@ const CategoryService = {
     },
 
     async deleteAllCategory(categoryIds) {
-        console.log(categoryIds);
         const result = await Category.deleteMany({ _id: { $in: categoryIds } });
         return result;
     },

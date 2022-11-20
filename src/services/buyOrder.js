@@ -1,6 +1,5 @@
 import BuyOrder from '../models/base/BuyOrder.js';
 import mongoose from 'mongoose';
-import ResponseModel from '../models/response/ResponseModel.js';
 
 const BuyOrderService = {
     async getAll() {
@@ -35,7 +34,6 @@ const BuyOrderService = {
     },
 
     async deleteAllBuyOrder(buyOrderIds) {
-        console.log(buyOrderIds);
         const result = await BuyOrder.deleteMany({ _id: { $in: buyOrderIds } });
         return result;
     },

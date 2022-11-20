@@ -5,7 +5,6 @@ const CartController = {
 
     async getAll(req, res, next) {
         // try {
-        console.log(req.user);
         const result = await CartService.getAll(req.user);
         return res.status(200).json(new ResponseModel(200, [], result));
         // } catch (e) {
@@ -24,7 +23,6 @@ const CartController = {
 
     async create(req, res, next) {
         // try {
-        console.log(req.body);
         const result = await CartService.createItemCart(req.body);
         return res.status(200).json(new ResponseModel(200, ['Thêm giỏ hàng thành công'], result));
         // } catch (e) {
@@ -44,7 +42,6 @@ const CartController = {
 
     async delete(req, res, next) {
         const cartId = req.params.cartId;
-        console.log(req.params);
         try {
             const result = await CartService.deleteCart(cartId);
             return res.status(200).json(new ResponseModel(200, ['Xóa thành công'], result));

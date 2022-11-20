@@ -31,13 +31,13 @@ const AuthService = {
                     REFRESH_KEY,
                     TIME_TOKEN.REFRESH,
                 );
-                user.avatar = ava
+                user.avatar = ava;
 
                 return new ResponseModel(200, [], {
                     user,
                     accessToken,
                     refreshToken,
-                    refId
+                    refId,
                 });
             }
             return false;
@@ -53,7 +53,8 @@ const AuthService = {
 
         if (!refreshToken) {
             return res.status(401).json(new ResponseModel(401, ['Hết phiên bản, vui lòng đăng nhập lại'], null));
-        };
+        }
+        ;
 
         jwt.verify(refreshToken, REFRESH_KEY, (err, { user }) => {
             if (err) {
