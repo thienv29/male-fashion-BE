@@ -18,7 +18,7 @@ const SaleOrderService = {
     }
     ,
     async getFullById(id) {
-        const saleOrder = await SaleOrder.findOne({ _id: id });
+        const saleOrder = await SaleOrder.findOne({ _id: id }).populate('voucher');
         const listDetails = await SaleOrderDetail.find({saleOrder: mongoose.Types.ObjectId(id)}).populate('productDetail');
         saleOrder.set('listDetails',listDetails, { strict: false })
         return saleOrder;

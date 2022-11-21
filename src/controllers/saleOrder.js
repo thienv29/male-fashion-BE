@@ -21,21 +21,21 @@ const SaleOrderController = {
         }
     },
     async getFullById(req, res, next) {
-        try {
-            const result = await SaleOrderService.getFullById(req.params.id);
-            return res.status(200).json(new ResponseModel(200, [], result));
-        } catch (e) {
-            res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin hóa đơn'], null));
-        }
+        // try {
+        const result = await SaleOrderService.getFullById(req.params.id);
+        return res.status(200).json(new ResponseModel(200, [], result));
+        // } catch (e) {
+        //     res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin hóa đơn'], null));
+        // }
     },
 
     async create(req, res, next) {
-        // try {
-        const result = await SaleOrderService.createSaleOrder(req.body);
-        return res.status(200).json(new ResponseModel(200, ['Thêm hóa đơn thành công'], result));
-        // } catch (e) {
-        //     return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin hóa đơn'], null));
-        // }
+        try {
+            const result = await SaleOrderService.createSaleOrder(req.body);
+            return res.status(200).json(new ResponseModel(200, ['Thêm hóa đơn thành công'], result));
+        } catch (e) {
+            return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin hóa đơn'], null));
+        }
     },
 
     async update(req, res, next) {

@@ -20,12 +20,13 @@ const UserService = {
             ...user,
         });
         const result = await userSchema.save();
-
         return result;
     }
     ,
     async updateUser(user) {
-        user.password = await hashPassword(user.password);
+        if (user.password){
+            user.password = await hashPassword(user.password);
+        }
         const result = await User.findByIdAndUpdate(user._id, user);
 
         return result;
