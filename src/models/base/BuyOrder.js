@@ -7,7 +7,7 @@ const BuyOrderSchema = new mongoose.Schema({
         code: { type: String, required: true, trim: true },
         description: { type: String, required: true, trim: true },
         supplier: { type: mongoose.Schema.Types.ObjectId, ref: 'Supplier' },
-        createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
+        createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     },
     {
         timestamps: true,

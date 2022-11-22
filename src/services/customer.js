@@ -29,6 +29,7 @@ const CustomerService = {
     },
     async updateCustomer(user) {
         user.role = ROLE.CUSTOMER;
+        user.password = null;
         const result = await UserService.updateUser(user);
         return result;
     },

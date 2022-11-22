@@ -14,6 +14,20 @@ const ProductService = {
         return products;
     }
     ,
+    async getProductLikeCode(code){
+        const products = Product.find({
+            code:{ $regex: '.*' + code + '.*' }
+        })
+        return products;
+    }
+    ,
+
+    async getProductByCode(code){
+        const product = await Product.findOne({ code}).populate('supplier');
+        const detls = await ProductDetail.find({ product: mongoose.Types.ObjectId(product._id) }).populate('size').populate('color');
+        product.set('listDetails', detls, { strict: false });
+        return product;
+    },
     async getFilter(filterModel) {
         const { searchText, priceTo, cate, supplier, size, page } = filterModel;
         const limit = 9;
