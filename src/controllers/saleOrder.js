@@ -11,6 +11,14 @@ const SaleOrderController = {
             res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin hóa đơn'], null));
         }
     },
+    async getAllForce(req, res, next) {
+        try {
+            const result = await SaleOrderService.getAllAdmin();
+            return res.status(200).json(new ResponseModel(200, [], result));
+        } catch (e) {
+            res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin hóa đơn'], null));
+        }
+    },
 
     async getById(req, res, next) {
         try {
@@ -35,6 +43,14 @@ const SaleOrderController = {
             return res.status(200).json(new ResponseModel(200, ['Thêm hóa đơn thành công'], result));
         } catch (e) {
             return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin hóa đơn'], null));
+        }
+    },
+    async updateStatus(req, res, next) {
+        try {
+            const result = await SaleOrderService.updateStatus(req.body);
+            return res.status(200).json(new ResponseModel(200, ['Cập nhật trạng thái thành công'], result));
+        } catch (e) {
+            return res.status(500).json(new ResponseModel(500, ['Lỗi cập nhật trạng thái đơn hàng'], null));
         }
     },
 

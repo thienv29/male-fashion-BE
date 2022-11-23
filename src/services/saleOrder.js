@@ -4,11 +4,20 @@ import mongoose from 'mongoose';
 import SaleOrderDetail from '../models/base/SaleOrderDetail.js';
 import Cart from '../models/base/Cart.js';
 import CartService from './cart.js';
+import BuyOrder from '../models/base/BuyOrder.js';
+import Product from '../models/base/Product.js';
+import User from '../models/base/User.js';
+import { SALE_ORDER_STATUS } from '../common/constant/sale-order-status.js';
 
 const SaleOrderService = {
     async getAll(user) {
         const customer = await Customer.findOne({ user: mongoose.Types.ObjectId(user._id) });
         const saleOrders = await SaleOrder.find({ customer: mongoose.Types.ObjectId(customer._id) });
+        return saleOrders;
+    }
+    ,
+    async getAllAdmin() {
+        const saleOrders = await SaleOrder.find();
         return saleOrders;
     }
     ,
@@ -19,8 +28,19 @@ const SaleOrderService = {
     ,
     async getFullById(id) {
         const saleOrder = await SaleOrder.findOne({ _id: id }).populate('voucher');
+        const customer = await Customer.findOne({_id: saleOrder.customer}).populate('user')
         const listDetails = await SaleOrderDetail.find({saleOrder: mongoose.Types.ObjectId(id)}).populate('productDetail');
+        const productIds = [];
+        listDetails.forEach((detail) => {
+            productIds.push(detail.productDetail.product.toString())
+        })
+        const products = await Product.find({ _id: { $in: productIds } })
+        listDetails.forEach((e) => {
+            const product = products.find(productCreated =>{return  productCreated._id.toString() == e.productDetail.product.toString()})
+            e.set('product',product, { strict: false })
+        })
         saleOrder.set('listDetails',listDetails, { strict: false })
+        saleOrder.set('user',customer.user, { strict: false })
         return saleOrder;
     }
     ,
@@ -48,6 +68,18 @@ const SaleOrderService = {
             }
 
         }
+        return result;
+    }
+    ,
+    async updateStatus(dataUpdate) {
+       const {id,canceled,activeStep } = dataUpdate;
+       let status = '';
+       if (canceled){
+           status = SALE_ORDER_STATUS.CANCELED;
+       }else{
+           status = SALE_ORDER_STATUS.getByNumber(activeStep)
+       }
+       const result = await SaleOrder.findOneAndUpdate({_id : id},{status});
         return result;
     }
     ,
