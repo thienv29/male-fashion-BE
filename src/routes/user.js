@@ -17,4 +17,6 @@ route.get('/get-all-2', AuthMiddleware.authorize(ROLE.CUSTOMER), UserController.
 
 route.get('/get/:id', AuthMiddleware.authorize(ROLE.ADMIN), UserController.getById);
 
+route.get('/get-current/', AuthMiddleware.authorize(ROLE.CUSTOMER), UserController.getCurrentUser);
+
 export default route;

@@ -5,7 +5,6 @@ const SizeController = {
 
     async getAll(req, res, next) {
         try {
-            console.log(req.user);
             const result = await SizeService.getAll();
             return res.status(200).json(new ResponseModel(200, [], result));
         } catch (e) {

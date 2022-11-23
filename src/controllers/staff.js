@@ -15,7 +15,7 @@ const StaffController = {
     async getById(req, res, next) {
         try {
             const result = await StaffService.getById(req.params.id);
-            res.json(new ResponseModel(200, [], result));
+            return res.json(new ResponseModel(200, [], result));
         } catch (e) {
             res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin nhân viên'], null));
         }

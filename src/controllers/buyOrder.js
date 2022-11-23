@@ -22,12 +22,12 @@ const BuyOrderController = {
     },
 
     async create(req, res, next) {
-        try {
+        // try {
             const result = await BuyOrderService.createBuyOrder(req.body);
             return res.status(200).json(new ResponseModel(200, ['Thêm phiếu nhập thành công'], result));
-        } catch (e) {
-            return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin phiếu nhập'], null));
-        }
+        // } catch (e) {
+        //     return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin phiếu nhập'], null));
+        // }
     },
 
     async update(req, res, next) {

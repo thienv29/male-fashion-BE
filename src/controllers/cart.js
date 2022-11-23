@@ -5,7 +5,6 @@ const CartController = {
 
     async getAll(req, res, next) {
         // try {
-        console.log(req.user);
         const result = await CartService.getAll(req.user);
         return res.status(200).json(new ResponseModel(200, [], result));
         // } catch (e) {
@@ -24,9 +23,8 @@ const CartController = {
 
     async create(req, res, next) {
         // try {
-        console.log(req.body);
         const result = await CartService.createItemCart(req.body);
-        return res.status(200).json(new ResponseModel(200, ['Thêm giỏ hàng thành công'], result));
+        return res.status(200).json(new ResponseModel(200, [], result));
         // } catch (e) {
         //     return res.status(500).json(new ResponseModel(500, ['Lỗi thêm thông tin giỏ hàng'], null));
         // }
@@ -35,7 +33,8 @@ const CartController = {
     async update(req, res, next) {
         try {
             const result = await CartService.updateCart(req.body);
-            return res.status(200).json(new ResponseModel(200, ['Sửa giỏ hàng thành công'], result));
+            // return res.status(200).json(new ResponseModel(200, ['Sửa giỏ hàng thành công'], result));
+            return res.status(200).json(new ResponseModel(200, [], result));
         } catch (e) {
             console.log(e);
             return res.status(500).json(new ResponseModel(500, ['Lỗi cập nhật thông tin giỏ hàng'], null));
@@ -44,7 +43,6 @@ const CartController = {
 
     async delete(req, res, next) {
         const cartId = req.params.cartId;
-        console.log(req.params);
         try {
             const result = await CartService.deleteCart(cartId);
             return res.status(200).json(new ResponseModel(200, ['Xóa thành công'], result));

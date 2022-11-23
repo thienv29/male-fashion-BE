@@ -21,6 +21,15 @@ const UserController = {
         }
     },
 
+    async getCurrentUser(req, res, next) {
+        try {
+            const result = await UserService.getById(req.user._id);
+            return res.status(200).json(new ResponseModel(500, [], result));
+        } catch (e) {
+            return res.status(500).json(new ResponseModel(500, ['Lỗi lấy thông tin khách hàng'], null));
+        }
+    },
+
     async create(req, res, next) {
         try {
             const result = await UserService.createUser(req.body);

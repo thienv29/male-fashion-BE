@@ -15,7 +15,6 @@ const StaffService = {
     },
     async getStaffByUserId(id) {
         const staff = await Staff.findOne({ user: mongoose.Types.ObjectId(id) });
-        console.log(staff);
         return staff;
     },
     async createStaff(user) {
@@ -23,7 +22,7 @@ const StaffService = {
         const userCreacted = await UserService.createUser(user);
         const staffTmp = new Staff({
             _id: new mongoose.Types.ObjectId(),
-            user: userCreacted._id
+            user: userCreacted._id,
         });
         await staffTmp.save();
         return userCreacted;
@@ -42,9 +41,9 @@ const StaffService = {
     async deleteAllStaff(staffIds) {
         const result = await User.deleteMany({ _id: { $in: staffIds } });
         const staffIdObject = staffIds.map((id) => {
-            return mongoose.Types.ObjectId(id)
-        })
-        const detls = await Staff.deleteMany({ staff: { $in: staffIdObject } })
+            return mongoose.Types.ObjectId(id);
+        });
+        const detls = await Staff.deleteMany({ staff: { $in: staffIdObject } });
         return result;
     },
 

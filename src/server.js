@@ -1,11 +1,12 @@
 import express from 'express';
 import routes from './routes/index.js';
 import mongoose from 'mongoose';
-import { DB_LINK, PORT, ADMIN_APP, CLIENT_APP } from './config/index.js';
+import { ADMIN_APP, CLIENT_APP, DB_LINK, PORT } from './config/index.js';
 import http from 'http';
 import cookiePaser from 'cookie-parser';
 import morgan from 'morgan';
-import cors from 'cors'
+import cors from 'cors';
+
 const app = express();
 
 mongoose
@@ -21,7 +22,7 @@ mongoose
 const startServer = () => {
     var allowedDomains = [ADMIN_APP, CLIENT_APP];
     app.use(cors({
-        origin: function (origin, callback) {
+        origin: function(origin, callback) {
             // bypass the requests with no origin (like curl requests, mobile apps, etc )
             if (!origin) return callback(null, true);
 

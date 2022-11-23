@@ -5,7 +5,7 @@ import WishlistController from '../controllers/wishlist.js';
 
 const route = Router();
 
-route.post('/create',AuthMiddleware.authorize(ROLE.CUSTOMER), WishlistController.create);
+route.post('/create', AuthMiddleware.authorize(ROLE.CUSTOMER), WishlistController.create);
 
 route.patch('/update', WishlistController.update);
 
@@ -13,7 +13,7 @@ route.get('/delete/:wishlistId', WishlistController.delete);
 
 route.post('/delete-all', WishlistController.deleteAll);
 
-route.get('/get-all',AuthMiddleware.authorize(ROLE.CUSTOMER),  WishlistController.getAll);
+route.get('/get-all', AuthMiddleware.authorize(ROLE.CUSTOMER), WishlistController.getAll);
 
 route.get('/get/:id', WishlistController.getById);
 

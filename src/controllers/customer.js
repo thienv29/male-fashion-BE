@@ -33,7 +33,7 @@ const CustomerController = {
     async update(req, res, next) {
         try {
             const result = await CustomerService.updateCustomer(req.body);
-            return res.json(new ResponseModel(200, [], result));
+            return res.json(new ResponseModel(200, ['Cập nhật thông tin thành công'], result));
         } catch (e) {
             return res.status(500).json(new ResponseModel(500, ['Lỗi cập nhật thông tin khách hàng'], null));
         }

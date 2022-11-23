@@ -1,7 +1,5 @@
 import Color from '../models/base/Color.js';
-import { hashPassword } from '../utils/hashPassword.js';
 import mongoose from 'mongoose';
-import ResponseModel from '../models/response/ResponseModel.js';
 
 const ColorService = {
     async getAll() {

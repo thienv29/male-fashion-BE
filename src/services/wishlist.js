@@ -15,10 +15,9 @@ const WishlistService = {
     }
     ,
     async createWishlist(wishlist) {
-        console.log(wishlist);
         const wishListOld = await Wishlist.findOne({
             product: mongoose.Types.ObjectId(wishlist.product),
-            customer: mongoose.Types.ObjectId(wishlist.customer)
+            customer: mongoose.Types.ObjectId(wishlist.customer),
         });
 
         if (wishListOld) {
@@ -41,13 +40,11 @@ const WishlistService = {
 
     ,
     async deleteWishlist(wishlistId) {
-        console.log(wishlistId);
         const result = await Wishlist.findByIdAndDelete(wishlistId);
         return result;
     },
 
     async deleteAllWishlist(wishlistIds) {
-        console.log(wishlistIds);
         const result = await Wishlist.deleteMany({ _id: { $in: wishlistIds } });
         return result;
     },
