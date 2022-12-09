@@ -27,7 +27,10 @@ const UserService = {
         if (user.password){
             user.password = await hashPassword(user.password);
         }
-        const result = await User.findByIdAndUpdate(user._id, user);
+        const userCreated = await User.findOne({email: user.email});
+        const passwordCreated = userCreated.password;
+
+        const result = await User.findByIdAndUpdate(user._id, {...user, password: passwordCreated});
 
         return result;
     }

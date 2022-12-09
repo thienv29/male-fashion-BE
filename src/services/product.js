@@ -91,7 +91,6 @@ const ProductService = {
     }
     ,
     async updateProduct(product) {
-        const listDetails = productFull.listDetails;
         const result = await Product.findByIdAndUpdate(product._id, product);
         return result;
     }
