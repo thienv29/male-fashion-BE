@@ -15,4 +15,7 @@ route.get('/get-all', BuyOrderController.getAll);
 
 route.get('/get/:id', BuyOrderController.getById);
 
+route.get('/get-total-order', BuyOrderController.getTotalOrder);
+route.get('/get-total-buy-order', BuyOrderController.getTotalBuyOrder);
+
 export default route;

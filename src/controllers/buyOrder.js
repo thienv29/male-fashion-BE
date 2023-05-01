@@ -1,6 +1,7 @@
 import BuyOrderService from '../services/buyOrder.js';
 import ResponseModel from '../models/response/ResponseModel.js';
-
+import BuyOrderDetail from '../models/base/BuyOrderDetail.js';
+import SaleOrderDetail from '../models/base/SaleOrderDetail.js';
 const BuyOrderController = {
 
     async getAll(req, res, next) {
@@ -59,6 +60,18 @@ const BuyOrderController = {
             return res.status(500).json(new ResponseModel(500, ['Lỗi xóa phiếu nhập'], null));
         }
     },
+     async getTotalOrder(req, res, next){
+        let sumAmount = 0;
+       const listDetails = await SaleOrderDetail.find({});
+       listDetails.forEach(detail => sumAmount +=(detail.quantity * detail.price));
+       return res.status(200).json(new ResponseModel(200, [], sumAmount));
+     },
+     async getTotalBuyOrder(req, res, next){
+        let sumAmount = 0;
+       const listDetails = await BuyOrderDetail.find({});
+       listDetails.forEach(detail => sumAmount += (detail.quantity * detail.price));
+       return res.status(200).json(new ResponseModel(200, [], sumAmount));
+     }
 };
 
 export default BuyOrderController;

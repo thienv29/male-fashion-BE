@@ -46,12 +46,12 @@ const SaleOrderController = {
         }
     },
     async updateStatus(req, res, next) {
-        try {
-            const result = await SaleOrderService.updateStatus(req.body);
+        // try {
+            const result = await SaleOrderService.updateStatus(res,req.body);
             return res.status(200).json(new ResponseModel(200, ['Cập nhật trạng thái thành công'], result));
-        } catch (e) {
-            return res.status(500).json(new ResponseModel(500, ['Lỗi cập nhật trạng thái đơn hàng'], null));
-        }
+        // } ca/tch (e) {
+            // return res.status(500).json(new ResponseModel(500, ['Lỗi cập nhật trạng thái đơn hàng'], null));
+        // }
     },
 
     async update(req, res, next) {
